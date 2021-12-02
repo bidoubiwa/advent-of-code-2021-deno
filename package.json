@@ -1,0 +1,23 @@
+{
+  "name": "advent-of-code-deno",
+  "version": "0.1.0",
+  "description": "Advent of codes in typescript",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bidoubiwa/advent-of-code-deno.git"
+  },
+  "keywords": [
+    "advent-of-code"
+  ],
+  "author": "Charlotte Vermandel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bidoubiwa/advent-of-code-deno/issues"
+  },
+  "homepage": "https://github.com/bidoubiwa/advent-of-code-deno#readme",
+  "devDependencies": {
+  }
+}
