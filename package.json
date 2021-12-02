@@ -4,6 +4,7 @@
   "description": "Advent of codes in typescript",
   "main": "index.js",
   "scripts": {
+    "21-1-1": "deno run --allow-read years/2021/day_01/part_1/index.ts"
   },
   "repository": {
     "type": "git",

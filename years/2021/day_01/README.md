@@ -5,7 +5,7 @@
 ### Day 01
 
 ```bash
-deno run --allow-read inputfile
+deno run --allow-read=part_1/inputfile part_1/index.ts
 ```
 
 ## --- Day 1: Sonar Sweep ---
