@@ -1,4 +1,4 @@
-import { inputFileResolver } from './inputfile-resolver.ts';
+import { fileResolver } from './file-resolver.ts';
 import { arraySum } from './array-sum.ts';
 
-export { arraySum, inputFileResolver };
+export { arraySum, fileResolver };
