@@ -18,12 +18,13 @@
 npm run 21-1-1 # year-day-part
 
 # deno
-deno run --allow-read years/2021/day_01/part_1/index.ts # path to entry
+deno run --allow-read day_01/part_1/index.ts # path to entry
 ```
 
 ### Day 1
 
-**Part 1** [code](./years/2021/day_01/parts_1)
-**Part 2** [code](./years/2021/day_01/parts_2)
+- **Part 1** [code](./years/2021/day_01/parts_1)
+
+- **Part 2** [code](./years/2021/day_01/parts_2)
 
 

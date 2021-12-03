@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Advent of codes in deno",
   "scripts": {
-    "21-1-1": "deno run --allow-read years/2021/day_01/part_1/index.ts",
-    "21-1-2": "deno run --allow-read years/2021/day_01/part_2/index.ts"
+    "21-1-1": "deno run --allow-read src/day_01/part_1/index.ts",
+    "21-1-2": "deno run --allow-read src/day_01/part_2/index.ts"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-import { inputFileResolver } from '../../../../utils/index.ts';
+import { inputFileResolver } from '../../../utils/index.ts';;
 import { main } from './aoc.ts';
 
 // Get absolute path to the input file of the current directory
