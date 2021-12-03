@@ -14,7 +14,7 @@
 ### Usage
 
 ```bash
-deno run --watch --allow-read <path to index.ts>
+deno run --watch --A <path to index.ts>
 ```
 
 ### Day 1

@@ -16,7 +16,7 @@
   },
   "fmt": {
     "files": {
-      "include": ["years/", "utils"]
+      "include": ["scripts", "utils", "src"]
     },
     "options": {
       "useTabs": false,
