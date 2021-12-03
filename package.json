@@ -2,10 +2,6 @@
   "name": "advent-of-code-deno",
   "version": "0.1.0",
   "description": "Advent of codes in deno",
-  "scripts": {
-    "21-1-1": "deno run --allow-read src/day_01/part_1/index.ts",
-    "21-1-2": "deno run --allow-read src/day_01/part_2/index.ts"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bidoubiwa/advent-of-code-deno.git"
