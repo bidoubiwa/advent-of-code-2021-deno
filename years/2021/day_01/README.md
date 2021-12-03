@@ -2,10 +2,16 @@
 
 ## Usage
 
-### Day 01
+### part 1
 
 ```bash
-deno run --allow-read=part_1/inputfile part_1/index.ts
+deno run --watch --allow-read part_1/index.ts
+```
+
+### part 2
+
+```bash
+deno run --watch --allow-read part_2/index.ts
 ```
 
 ## --- Day 1: Sonar Sweep ---
