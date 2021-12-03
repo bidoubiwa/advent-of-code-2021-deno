@@ -3,7 +3,7 @@
 // epsilon rate is the opposite of gamma rate
 
 export function main(input: string): number {
-  const sequences = input.split('\n');
+  const sequences = input.split('\n').filter((seq) => seq[0]);
 
   const init = Array(sequences[0].length).fill([0, 0]);
 
@@ -25,5 +25,6 @@ export function main(input: string): number {
     ['', ''],
   );
 
+  console.log({ gama, epsilon });
   return parseInt(gama, 2) * parseInt(epsilon, 2);
 }
