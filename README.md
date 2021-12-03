@@ -14,17 +14,18 @@
 ### Usage
 
 ```bash
-# npm 
-npm run 21-1-1 # year-day-part
-
-# deno
-deno run --allow-read day_01/part_1/index.ts # path to entry
+deno run --watch --allow-read <path to index.ts>
 ```
 
 ### Day 1
 
-- **Part 1** [code](./years/2021/day_01/parts_1)
+- **Part 1** [code](./src/day_01/parts_1)
 
-- **Part 2** [code](./years/2021/day_01/parts_2)
+- **Part 2** [code](./src/day_01/parts_2)
 
 
+### Day 2
+
+- **Part 1** [code](./src/day_02/parts_1)
+
+- **Part 2** [code](./src/day_02/parts_2)

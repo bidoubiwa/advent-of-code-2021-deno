@@ -13,7 +13,7 @@ export function main(input: string): number {
   
   const [ hor, depths ] = instructions.reduce(([hor, depths], [instruction, steps]) => {
     if (instruction === 'f') return [ hor += steps, depths ]
-    else if (instruction === 'u') return [ hor, depths += (steps * -1) ]
+    else if (instruction === 'u') return [ hor, depths -= steps ]
     return [ hor, depths += steps ]
   }, [0,0])
 

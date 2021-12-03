@@ -1,19 +1,3 @@
-# Day 01 - 2021
-
-## Usage
-
-### part 1
-
-```bash
-deno run --watch --allow-read part_1/index.ts
-```
-
-### part 2
-
-```bash
-deno run --watch --allow-read part_2/index.ts
-```
-
 ## --- Day 1: Sonar Sweep ---
 
 You're minding your own business on a ship at sea when the overboard alarm goes
