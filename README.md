@@ -8,6 +8,16 @@
   <img src="./assets/logo.svg" width="100" height="auto" />
 </p>
 
+### Requirements 
+
+I only guarantee the scripts working with the following configuration
+
+```
+deno 1.16.4
+v8 9.7.106.15
+typescript 4.4.2
+```
+
 ### Usage
 
 ```bash
