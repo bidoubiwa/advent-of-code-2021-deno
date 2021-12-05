@@ -46,7 +46,7 @@ export function bingoCarac(input: string): {
 
   return {
     boards,
-    bingoNbrs: boards.splice(0, 1)[0].split(','),
+    bingoNbrs: boards.splice(0, 1)[0].split(',').map((nbr) => nbr.trim()),
     rowLen: boards[0].split('\n')[0].split(' ').length,
     colLen: boards[0].split('\n').length - 1,
   };
@@ -60,13 +60,23 @@ function startBingo(
 ) {
   for (const number of distribution) {
     boards = markBoards(boards, number);
-    const bingo = boards
-      .find((board) => verification(board, rowLen, colLen));
-    if (bingo) {
-      return {
-        number: parseInt(number),
-        bingo,
-      };
+
+    const bingos = boards.reduce<string[]>((bingos, board, index) => {
+      if (verification(board, rowLen, colLen)) {
+        bingos.push(board);
+      }
+      return bingos;
+    }, []);
+
+    for (const bingo of bingos) {
+      if (boards.length > 1) {
+        boards = boards.filter((board) => board !== bingo);
+      } else {
+        return {
+          number: parseInt(number),
+          bingo: boards[0],
+        };
+      }
     }
   }
   return {
@@ -78,8 +88,8 @@ function startBingo(
 export function main(input: string): number {
   let { boards, rowLen, colLen, bingoNbrs } = bingoCarac(input);
   let freshBoards = [...boards];
+
   const { bingo, number } = startBingo(bingoNbrs, freshBoards, rowLen, colLen);
-  console.log('BINGO', bingo);
   const total = bingo
     .split(/ |\n/g)
     .filter((c) => !['x', ''].includes(c))
