@@ -47,3 +47,9 @@ deno run --unstable -A scripts/init_day/index.ts
 - **Part 1** [code](./src/day_03/part_1)
 
 - **Part 2** [code](./src/day_03/part_2)
+
+### Day 4
+
+- **Part 1** [code](./src/day_04/part_1)
+
+- **Part 2** [code](./src/day_04/part_2)
