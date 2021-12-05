@@ -1,6 +1,10 @@
 type Board = string;
 type Boards = Board[];
 
+function rangedArray(range: number): number[] {
+  return [...Array(range).keys()];
+}
+
 export function bingoInit(input: string): {
   rowLen: number;
   colLen: number;
@@ -17,10 +21,6 @@ export function bingoInit(input: string): {
     rowLen: boards[0].split('\n')[0].split(' ').length,
     colLen: boards[0].split('\n').length - 1,
   };
-}
-
-function rangedArray(range: number): number[] {
-  return [...Array(range).keys()];
 }
 
 function isItBingo(
@@ -61,12 +61,13 @@ function startBingo(
   for (const number of distribution) {
     boards = markBoards(boards, number);
 
-    const bingos = boards.reduce<string[]>((bingos, board, index) => {
-      if (isItBingo(board, rowLen, colLen)) {
-        bingos.push(board);
-      }
-      return bingos;
-    }, []);
+    const bingos = boards
+      .reduce<string[]>((bingos, board, index) => {
+        if (isItBingo(board, rowLen, colLen)) {
+          bingos.push(board);
+        }
+        return bingos;
+      }, []);
 
     for (const bingo of bingos) {
       if (boards.length > 1) {

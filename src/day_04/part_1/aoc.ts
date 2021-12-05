@@ -5,7 +5,25 @@ function rangedArray(range: number): number[] {
   return [...Array(range).keys()];
 }
 
-function verification(
+export function bingoInit(input: string): {
+  rowLen: number;
+  colLen: number;
+  bingoNbrs: string[];
+  boards: string[];
+} {
+  const boards = input
+    .split(/^\n/gm)
+    .map((board) => board.replaceAll('  ', ' '));
+
+  return {
+    boards,
+    bingoNbrs: boards.splice(0, 1)[0].split(','),
+    rowLen: boards[0].split('\n')[0].split(' ').length,
+    colLen: boards[0].split('\n').length - 1,
+  };
+}
+
+function isItBingo(
   board: string,
   rowLen: number,
   colLen: number,
@@ -34,24 +52,6 @@ function markBoards(boards: Boards, nbr: string) {
     .map((board) => board.replace(regex, replacer));
 }
 
-export function bingoCarac(input: string): {
-  rowLen: number;
-  colLen: number;
-  bingoNbrs: string[];
-  boards: string[];
-} {
-  const boards = input
-    .split(/^\n/gm)
-    .map((board) => board.replaceAll('  ', ' '));
-
-  return {
-    boards,
-    bingoNbrs: boards.splice(0, 1)[0].split(','),
-    rowLen: boards[0].split('\n')[0].split(' ').length,
-    colLen: boards[0].split('\n').length - 1,
-  };
-}
-
 function startBingo(
   distribution: string[],
   boards: string[],
@@ -61,7 +61,7 @@ function startBingo(
   for (const number of distribution) {
     boards = markBoards(boards, number);
     const bingo = boards
-      .find((board) => verification(board, rowLen, colLen));
+      .find((board) => isItBingo(board, rowLen, colLen));
     if (bingo) {
       return {
         number: parseInt(number),
@@ -76,10 +76,11 @@ function startBingo(
 }
 
 export function main(input: string): number {
-  let { boards, rowLen, colLen, bingoNbrs } = bingoCarac(input);
+  let { boards, rowLen, colLen, bingoNbrs } = bingoInit(input);
   let freshBoards = [...boards];
+
   const { bingo, number } = startBingo(bingoNbrs, freshBoards, rowLen, colLen);
-  console.log('BINGO', bingo);
+
   const total = bingo
     .split(/ |\n/g)
     .filter((c) => !['x', ''].includes(c))
