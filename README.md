@@ -30,26 +30,26 @@ deno run --unstable -A scripts/init_day/index.ts
 
 ### Day 1
 
-- **Part 1** [code](src/day_01/part_1)
+- **Part 1** [code](src/day_01/part_1/aoc.ts)
 
-- **Part 2** [code](./src/day_01/part_2)
+- **Part 2** [code](./src/day_01/part_2/aoc.ts)
 
 
 ### Day 2
 
-- **Part 1** [code](./src/day_02/part_1)
+- **Part 1** [code](./src/day_02/part_1/aoc.ts)
 
-- **Part 2** [code](./src/day_02/part_2)
+- **Part 2** [code](./src/day_02/part_2/aoc.ts)
 
 
 ### Day 3
 
-- **Part 1** [code](./src/day_03/part_1)
+- **Part 1** [code](./src/day_03/part_1/aoc.ts)
 
-- **Part 2** [code](./src/day_03/part_2)
+- **Part 2** [code](./src/day_03/part_2/aoc.ts)
 
 ### Day 4
 
-- **Part 1** [code](./src/day_04/part_1)
+- **Part 1** [code](./src/day_04/part_1/aoc.ts)
 
-- **Part 2** [code](./src/day_04/part_2)
+- **Part 2** [code](./src/day_04/part_2/aoc.ts)
