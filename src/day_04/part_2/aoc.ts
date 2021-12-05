@@ -1,40 +1,7 @@
 type Board = string;
 type Boards = Board[];
 
-function rangedArray(range: number): number[] {
-  return [...Array(range).keys()];
-}
-
-function verification(
-  board: string,
-  rowLen: number,
-  colLen: number,
-): Boolean {
-  return rangedArray(colLen)
-    .findIndex((index) => {
-      let winningStreak = new RegExp(
-        `(^ ?([0-9x]+ ){${index}}(x).*\n?){${colLen}}|((.?x){${rowLen}}\n)`,
-        'gm',
-      );
-      return board.search(winningStreak) !== -1;
-    }) !== -1;
-}
-
-function replacer(
-  whole: string,
-  before: string,
-  match: string,
-) {
-  return whole.replace(match, 'x');
-}
-
-function markBoards(boards: Boards, nbr: string) {
-  const regex = new RegExp(`([^0-9]+|^)(${nbr})([^0-9]+)`, 'g');
-  return boards
-    .map((board) => board.replace(regex, replacer));
-}
-
-export function bingoCarac(input: string): {
+export function bingoInit(input: string): {
   rowLen: number;
   colLen: number;
   bingoNbrs: string[];
@@ -52,6 +19,39 @@ export function bingoCarac(input: string): {
   };
 }
 
+function rangedArray(range: number): number[] {
+  return [...Array(range).keys()];
+}
+
+function isItBingo(
+  board: string,
+  rowLen: number,
+  colLen: number,
+): Boolean {
+  return rangedArray(colLen)
+    .findIndex((index) => {
+      let winningStreak = new RegExp(
+        `(^ ?([0-9x]+ ){${index}}(x).*\n?){${colLen}}|((.?x){${rowLen}}\n)`,
+        'gm',
+      );
+      return board.search(winningStreak) !== -1;
+    }) !== -1;
+}
+
+function replacer(
+  whole: string,
+  _before: string,
+  match: string,
+) {
+  return whole.replace(match, 'x');
+}
+
+function markBoards(boards: Boards, nbr: string) {
+  const regex = new RegExp(`([^0-9]+|^)(${nbr})([^0-9]+)`, 'g');
+  return boards
+    .map((board) => board.replace(regex, replacer));
+}
+
 function startBingo(
   distribution: string[],
   boards: string[],
@@ -62,7 +62,7 @@ function startBingo(
     boards = markBoards(boards, number);
 
     const bingos = boards.reduce<string[]>((bingos, board, index) => {
-      if (verification(board, rowLen, colLen)) {
+      if (isItBingo(board, rowLen, colLen)) {
         bingos.push(board);
       }
       return bingos;
@@ -86,7 +86,7 @@ function startBingo(
 }
 
 export function main(input: string): number {
-  let { boards, rowLen, colLen, bingoNbrs } = bingoCarac(input);
+  let { boards, rowLen, colLen, bingoNbrs } = bingoInit(input);
   let freshBoards = [...boards];
 
   const { bingo, number } = startBingo(bingoNbrs, freshBoards, rowLen, colLen);
