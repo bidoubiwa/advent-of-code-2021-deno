@@ -26,7 +26,13 @@ deno run --watch --A <path to index.ts>
 
 ### Generate new day
 
+The scripts automatically creates a new `day_x` folder based on the last day number already existing.
+It adds two directories `part_1` and `part_2` and copies the `README.md` from the [repo of irevoire](git@github.com:irevoire/aoc2021.git).
+Let's hope he ran his script before you launch this script. 
+
+```bash
 deno run --unstable -A scripts/init_day/index.ts
+```
 
 ### Day 1
 
