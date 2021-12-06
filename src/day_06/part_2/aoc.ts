@@ -4,7 +4,7 @@ export function main(input: string): number {
     .map((nbr) => parseInt(nbr))
     .sort((a, b) => a - b);
 
-  const fishPerDay = Array(10).fill(0);
+  const fishPerDay = Array(9).fill(0);
 
   fishes.reduce((fishes, dueDay) => {
     fishes[dueDay] += 1;
@@ -12,12 +12,9 @@ export function main(input: string): number {
   }, fishPerDay);
 
   for (let day = 0; day < 256; day++) {
-    fishPerDay[9] += fishPerDay[0];
-    fishPerDay[7] += fishPerDay[0];
-    for (let dueDay = 0; dueDay < 9; dueDay++) {
-      fishPerDay[dueDay] = fishPerDay[dueDay + 1];
-    }
-    fishPerDay[9] = 0;
+    const birth = fishPerDay.shift();
+    fishPerDay.push(birth);
+    fishPerDay[6] += birth;
   }
 
   const totalfish = fishPerDay.reduce(
