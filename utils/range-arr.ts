@@ -1,10 +1,11 @@
 export function range(start: number, end: number) {
   const list = [];
-  const [min, max] = [start, end].sort();
+  const [min, max] = [start, end].sort((a, b) => a - b);
 
-  for (var i = min; i <= max; i++) {
+  for (let i = min; i <= max; i++) {
     list.push(i);
   }
+  if (start > end) return list.reverse();
   return list;
 }
 
