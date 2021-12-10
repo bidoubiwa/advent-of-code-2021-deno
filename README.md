@@ -89,3 +89,9 @@ deno run --unstable -A scripts/init_day/index.ts
 - **Part 1** [code](./src/day_09/part_1/aoc.ts)
 
 - **Part 2** [code](./src/day_09/part_2/aoc.ts)
+
+### Day 10
+
+- **Part 1** [code](./src/day_10/part_1/aoc.ts)
+
+- **Part 2** [code](./src/day_10/part_2/aoc.ts)
