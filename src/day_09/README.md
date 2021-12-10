@@ -1,3 +1,9 @@
+<p align="center">
+
+![heatmap](../../assets/day_9_heatmap.png)
+
+</p>
+
 ## --- Day 9: Smoke Basin ---
 
 These caves seem to be [lava tubes](https://en.wikipedia.org/wiki/Lava_tube) .
@@ -55,6 +61,8 @@ the low point. The example above has four basins.
 
 The top-left basin, size `3`:
 
+<!-- [0,0], [0, 1], [1, 0] -->
+
 ```
 2199943210
 3987894921
@@ -66,7 +74,10 @@ The top-left basin, size `3`:
 The top-right basin, size `9`:
 
 ```
-2199943210398789492198567898928767896789
+2199943210
+3987894921
+9856789892
+8767896789
 9899965678
 ```
 
@@ -75,7 +86,8 @@ The middle basin, size `14`:
 ```
 2199943210
 3987894921
-98567898928767896789
+9856789892
+8767896789
 9899965678
 ```
 
