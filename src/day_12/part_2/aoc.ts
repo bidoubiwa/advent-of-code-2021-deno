@@ -43,7 +43,7 @@ function visitCave(node: Node, path: string, twice: boolean): string[] {
     if (childNode.name === 'start') console.log(node);
     if (!(childNode.small && path.includes(childNode.name))) {
       paths.push(...visitCave(childNode, path, twice));
-    } else if (childNode.small && path.includes(childNode.name) && !twice) {
+    } else if (!twice) {
       paths.push(...visitCave(childNode, path, true));
     }
   });
