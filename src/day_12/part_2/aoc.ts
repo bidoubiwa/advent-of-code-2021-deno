@@ -36,11 +36,11 @@ function parseInput(input: string) {
 }
 
 function visitCave(node: Node, path: string, twice: boolean): string[] {
-  path = path + `,` + node.name;
+  path = `${path},${node.name}`;
   let paths: string[] = [];
   if (node.name === 'end') return [path];
+
   node.links.forEach((childNode) => {
-    if (childNode.name === 'start') console.log(node);
     if (!(childNode.small && path.includes(childNode.name))) {
       paths.push(...visitCave(childNode, path, twice));
     } else if (!twice) {
