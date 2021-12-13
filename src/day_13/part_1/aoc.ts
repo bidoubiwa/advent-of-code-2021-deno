@@ -1,4 +1,46 @@
-import { rangedArray, showHeatMap } from '../../../utils/index.ts';
+import { rangedArray } from '../../../utils/index.ts';
+import {
+  bgCyan,
+  cyan,
+  red,
+  underline,
+} from 'https://deno.land/x/kleur/colors.ts';
+
+function gridDimensions(dots: number[][]) {
+  const { width, height } = dots.reduce<{ width: number; height: number }>(
+    ({ width, height }, curr) => {
+      if (curr[0] > width) width = curr[0];
+      if (curr[1] > height) height = curr[1];
+      return { width, height };
+    },
+    { width: 0, height: 0 },
+  );
+  return { width: width + 1, height: height + 1 };
+}
+
+function showHeatMap(
+  height: number,
+  width: number,
+  dots: Set<string>,
+) {
+  const newLine = new TextEncoder().encode('\n');
+  Deno.stdout.write(newLine);
+  rangedArray(height).map((line, y) => {
+    rangedArray(width).map((dot, x) => {
+      if (dots.has(`${x},${y}`)) {
+        const a = new TextEncoder().encode(red('#'));
+        Deno.stdout.write(a);
+      } else {
+        const a = new TextEncoder().encode('.');
+        Deno.stdout.write(a);
+      }
+    });
+    const a = new TextEncoder().encode('\n');
+    Deno.stdout.write(a);
+  });
+  const nl = new TextEncoder().encode('\n');
+  Deno.stdout.write(nl);
+}
 
 function parseInput(input: string) {
   const lines = input.split('\n');
@@ -14,102 +56,31 @@ function parseInput(input: string) {
   );
 }
 
-function gridDimensions(dots: number[][]) {
-  const { width, height } = dots.reduce<{ width: number; height: number }>(
-    ({ width, height }, curr) => {
-      if (curr[0] > width) width = curr[0];
-      if (curr[1] > height) height = curr[1];
-      return { width, height };
-    },
-    { width: 0, height: 0 },
-  );
-  return { width: width + 1, height: height + 1 };
-}
-
-type Map = string[][];
-function createMap(
-  height: number,
-  width: number,
-  dots: number[][],
-): Map {
-  const map = rangedArray(height).map((x) => Array(width).fill('.'));
-
-  dots.forEach(([x, y]) => {
-    map[y][x] = '#';
-  });
-  return map;
-}
-
-function foldMap(
-  height: number,
-  width: number,
-  map: Map,
-  foldAxe: string,
-  foldIndex: number,
-) {
+function foldMap(foldAxe: string, foldIndex: number, dots: number[][]) {
   if (foldAxe === 'y') {
-    const upper = map.splice(0, foldIndex);
-    map.shift();
-    map.reverse();
-
-    return upper.map((line, y) => {
-      return line.map((dot, x) => {
-        if (y >= map.length) return dot;
-        return [dot, map[y][x]].includes('#') ? '#' : '.';
-      });
+    return dots.map(([x1, y1]) => {
+      if (y1 > foldIndex) return [x1, foldIndex - (y1 - foldIndex)];
+      return [x1, y1];
+    });
+  } else {
+    return dots.map(([x1, y1]) => {
+      if (x1 > foldIndex) return [foldIndex - (x1 - foldIndex), y1];
+      return [x1, y1];
     });
   }
-
-  if (foldAxe === 'x') {
-    const left = createMap(height, width, []);
-    const right = createMap(height, map[0].length - foldIndex - 1, []);
-
-    map.reduce<{ left: Map; right: Map }>(
-      ({ left, right }, line, y) => {
-        line.forEach((dot, x) => {
-          if (x < foldIndex) left[y][x] = dot;
-          if (x > foldIndex) right[y][x - foldIndex - 1] = dot;
-        });
-        right[y].reverse();
-        return { left, right };
-      },
-      { left, right },
-    );
-    return left.map((line, y) => {
-      return line.map((dot, x) => {
-        return [dot, right[y][x]].includes('#') ? '#' : '.';
-      });
-    });
-  }
-
-  return [];
 }
 
 export function main(input: string): number {
-  const { dots, folds } = parseInput(input);
-
-  const grid = gridDimensions(dots);
-  let height = (grid.height % 2 == 0) ? grid.height + 1 : grid.height;
-  let width = grid.width;
-  let map = createMap(height, width, dots);
+  let { dots, folds } = parseInput(input);
 
   for (const fold of folds) {
     const [axe, folder] = fold.split('=');
     const foldIndex = parseInt(folder);
-
-    if (axe === 'x') width = foldIndex;
-    else height = foldIndex;
-
-    map = foldMap(height, width, map, axe, foldIndex);
+    dots = foldMap(axe, foldIndex, dots);
   }
+  const dotSet = new Set(dots.map((dot) => dot.join(',')));
+  const { width, height } = gridDimensions(dots);
 
-  const hashtags = map.reduce((totalDot, line) => {
-    line.forEach((dot) => {
-      if (dot === '#') totalDot += 1;
-    });
-    return totalDot;
-  }, 0);
-
-  showHeatMap(map, '#');
-  return hashtags;
+  showHeatMap(height, width, dotSet);
+  return dots.length;
 }
