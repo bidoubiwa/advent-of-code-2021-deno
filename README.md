@@ -24,6 +24,12 @@ typescript 4.4.2
 deno run --watch --A <path to index.ts>
 ```
 
+#### Example
+
+```
+deno run --watch -A src/day_13/part_1/index.ts
+```
+
 ### Generate new day
 
 The scripts automatically creates a new `day_x` folder based on the last day number already existing.
@@ -107,3 +113,9 @@ deno run --unstable -A scripts/init_day/index.ts
 - **Part 1** [code](./src/day_12/part_1/aoc.ts)
 
 - **Part 2** [code](./src/day_12/part_2/aoc.ts)
+
+### Day 13
+
+- **Part 1** [code](./src/day_13/part_1/aoc.ts)
+
+- **Part 2** [code](./src/day_13/part_2/aoc.ts)

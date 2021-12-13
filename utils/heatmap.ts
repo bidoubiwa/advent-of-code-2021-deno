@@ -1,8 +1,8 @@
 import { bgCyan, cyan, red } from 'https://deno.land/x/kleur/colors.ts';
 
 export function showHeatMap(
-  map: number[][],
-  number: number,
+  map: number[][] | string[][],
+  number: number | string,
   y?: number,
   x?: number,
 ) {
