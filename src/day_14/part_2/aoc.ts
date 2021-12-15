@@ -1,5 +1,15 @@
 type PolymersLinks = { [link: string]: string };
 
+type MoleculesCount = {
+  [molecule: string]: number;
+};
+
+type Cache = {
+  [step: number]: {
+    [polymerTuple: string]: MoleculesCount;
+  };
+};
+
 function windowGen(sequence: string[]) {
   return () => {
     let currentSequence: string[] = [];
@@ -29,65 +39,76 @@ function parseInput(input: string) {
   return { polymers: polymers.split(''), transforms };
 }
 
+function mergeMolecules(
+  leftCount: MoleculesCount,
+  rightCount: MoleculesCount,
+): MoleculesCount {
+  const moleculeCount = { ...leftCount, ...rightCount };
+
+  return Object.keys(moleculeCount).reduce<MoleculesCount>(
+    (moleculeCount, molecule) => {
+      if (leftCount[molecule] && rightCount[molecule]) {
+        moleculeCount[molecule] += leftCount[molecule];
+      }
+      return moleculeCount;
+    },
+    moleculeCount,
+  );
+}
+
 export function main(input: string): number {
   const { polymers, transforms } = parseInput(input);
+  let polymerCount: MoleculesCount = {};
+  const cache = {};
 
-  // console.log({ polymers, transforms });
   const windowItter = windowGen(polymers);
   let polymerTuple = windowItter();
 
-  const sequence: string[] = [polymerTuple[0]];
-  const cache = {};
+  polymerCount[polymerTuple[0]] = 1;
+
   while (polymerTuple.length > 1) {
-    polerize(polymerTuple, transforms, 11, cache);
+    const moleculeCount = polerize(polymerTuple, transforms, 41, cache);
+    polymerCount = mergeMolecules(moleculeCount, polymerCount);
     polymerTuple = windowItter();
   }
+  const sortedCount = Object.values(polymerCount).sort((
+    a: number,
+    b: number,
+  ) => a - b);
 
-  // const sortedPol = Object.keys(polymerMap).map((key) => polymerMap[key]).sort((
-  //   a: number,
-  //   b: number,
-  // ) => b - a);
-
-  // return sortedPol.shift() - sortedPol.pop();
-  return 1;
+  // @ts-ignore
+  return sortedCount.pop() - sortedCount.shift();
 }
-
-type Cache = {
-  [step: number]: {
-    [polymerTuple: string]: {
-      [polymer: string]: number;
-    };
-  };
-};
 
 function polerize(
   polymerTuple: string[],
   transformations: PolymersLinks,
   depth: number,
   cache: Cache,
-) {
+): MoleculesCount {
+  cache[depth] = cache[depth] || {};
+  const [left, right] = polymerTuple;
+  const polymer = `${left}${right}`;
+
   if (depth === 1) {
-    return polymerTuple[1];
+    return { [right]: 1 };
   }
 
-  // ["N", "N"]
-  const [left, right] = polymerTuple;
+  if (cache[depth][polymer]) {
+    return cache[depth][polymer];
+  }
 
-  // C
   const link = transformations[`${left}${right}`];
-
-  // ["N", "C"]
-  const fusion = [left, link];
-
-  polerize(fusion, transformations, depth - 1, cache);
-
-  // C, N
-  const secondFusion = [
+  const leftFusion = [left, link];
+  const rightFusion = [
     link,
     right,
   ];
 
-  polerize(secondFusion, transformations, depth - 1, cache);
+  const leftCount = polerize(leftFusion, transformations, depth - 1, cache);
+  const rightCount = polerize(rightFusion, transformations, depth - 1, cache);
 
-  // return link;
+  cache[depth][polymer] = mergeMolecules(leftCount, rightCount);
+
+  return cache[depth][polymer];
 }

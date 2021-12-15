@@ -50,12 +50,12 @@ export function main(input: string): number {
     {},
   );
 
-  const sortedPol = Object.keys(polymerMap).map((key) => polymerMap[key]).sort((
+  const sortedPol = Object.values(polymerMap).sort((
     a: number,
     b: number,
-  ) => b - a);
+  ) => a - b);
 
-  return sortedPol.shift() - sortedPol.pop();
+  return sortedPol.pop() - sortedPol.shift();
 }
 
 function polerize(
