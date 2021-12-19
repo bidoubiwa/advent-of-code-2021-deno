@@ -4,6 +4,12 @@ export { range, rangedArray } from './range-arr.ts';
 export { getMedian } from './median.ts';
 export { showHeatMap } from './heatmap.ts';
 export { isLowerCase } from './strings.ts';
-export { join, LiterValues, nextBin, windowGen } from './generators.ts';
+export {
+  join,
+  LiterValues,
+  nextBin,
+  NumberIterator,
+  windowGen,
+} from './generators.ts';
 
 export type { Fold, IterType } from './generators.ts';

@@ -1,3 +1,68 @@
+abstract class Iterator<T> {
+  abstract next(): T | null;
+
+  collect() {
+    return this.fold<T[]>((acc, curr) => {
+      acc.push(curr);
+      return acc;
+    }, []);
+  }
+
+  fold<P>(f: (acc: P, curr: T) => P, init: P): P {
+    let elem = this.next();
+    let acc = init;
+    while (elem !== null) {
+      acc = f(acc, elem);
+      elem = this.next();
+    }
+    return acc;
+  }
+
+  foldFirst(
+    f: (acc: T, curr: T) => T,
+  ): T | null {
+    let acc = this.next();
+    let elem = this.next();
+
+    while (elem !== null && acc !== null) {
+      acc = f(acc, elem);
+      elem = this.next();
+    }
+    return acc;
+  }
+}
+
+export abstract class NumberIterator extends Iterator<number> {
+  sum() {
+    return this.foldFirst((acc, curr) => acc + curr);
+  }
+
+  product() {
+    return this.foldFirst((acc, curr) => acc * curr);
+  }
+
+  min() {
+    return this.foldFirst((acc, curr) => Math.min(acc, curr));
+  }
+
+  max() {
+    return this.foldFirst((acc, curr) => Math.max(acc, curr));
+  }
+}
+
+export class NumberIter extends NumberIterator {
+  elem: number[];
+
+  constructor(elem: number[]) {
+    super();
+    this.elem = elem;
+  }
+  next() {
+    if (this.elem.length === 0) return null;
+    return this.elem.splice(0, 1)[0];
+  }
+}
+
 export function windowGen(sequence: string[], splitSize: number) {
   return () => {
     if (sequence.length === 0) return [];
