@@ -17,7 +17,6 @@ function inTrench(
   [lowX, highX]: number[],
   [lowY, highY]: number[],
 ): boolean {
-  // console.log({ xPos, yPos, x: [lowX, highX], y: [lowY, highY] });
   return xPos >= lowX && xPos <= highX && yPos >= lowY && yPos <= highY;
 }
 
@@ -31,7 +30,6 @@ function tryVelocity(
   let yPos = 0;
   let maxHeight = 0;
   while (yPos >= yTarget[0]) {
-    // console.log({ xPos, yPos, xVel, yVel });
     if (inTrench(xPos, yPos, xTarget, yTarget)) {
       return maxHeight;
     }
@@ -58,31 +56,16 @@ function findValidVelocity(xTarget: number[], yTarget: number[]) {
       }
     }
   }
-  console.log(maxHit);
-
   return maxHeight;
 }
 
 export function main(input: string): number {
   const [xTarget, yTarget] = parseInput(input);
-  // const [xTarget, yTarget] = parseInput(input);
 
   const target = findValidVelocity(
     xTarget.sort((a, b) => a - b),
     yTarget.sort((a, b) => a - b),
   );
-  console.log({ target });
 
-  // const rangeY = new RangeIter(lowY, 10);
-  // findValidVelocity(xTarget, yTarget);
-
-  // const yHits = rangeY
-  //   .filter((elem) => yHit(elem, lowY, highY));
-  // const rangeX = new RangeIter(lowY, 10);
-  // const xHits = rangeX
-  //   .filter((elem) => xHit(elem, lowX, highX));
-  // console.log(yHits.collect());
-  // console.log(xHits.collect());
-
-  return 1;
+  return target;
 }
