@@ -30,6 +30,10 @@ abstract class Iterator<T> {
     }
     return acc;
   }
+
+  map(f: (elem: T) => number): IterMapNumber<T> {
+    return new IterMapNumber(this, f);
+  }
 }
 
 export abstract class NumberIterator extends Iterator<number> {
@@ -48,9 +52,13 @@ export abstract class NumberIterator extends Iterator<number> {
   max() {
     return this.foldFirst((acc, curr) => Math.max(acc, curr));
   }
+
+  filter(f: (elem: number) => boolean): IterFilterNumber {
+    return new IterFilterNumber(this, f);
+  }
 }
 
-export class NumberIter extends NumberIterator {
+export class IterArrayMut extends NumberIterator {
   elem: number[];
 
   constructor(elem: number[]) {
@@ -60,6 +68,61 @@ export class NumberIter extends NumberIterator {
   next() {
     if (this.elem.length === 0) return null;
     return this.elem.splice(0, 1)[0];
+  }
+}
+
+export class RangeIter extends NumberIterator {
+  start: number;
+  end: number;
+
+  constructor(start: number, end: number) {
+    super();
+    this.start = start;
+    this.end = end;
+  }
+  next() {
+    if (this.start === this.end) return null;
+    const tmp = this.start;
+    if (this.end < this.start) this.start = this.start - 1;
+    else {
+      this.start = this.start + 1;
+    }
+    return tmp;
+  }
+}
+
+export class IterMapNumber<T> extends NumberIterator {
+  iterator: Iterator<T>;
+  mapper: (elem: T) => number;
+
+  constructor(iterator: Iterator<T>, mapper: (elem: T) => number) {
+    super();
+    this.iterator = iterator;
+    this.mapper = mapper;
+  }
+  next() {
+    let elem = this.iterator.next();
+    if (elem == null) return null;
+    return this.mapper(elem);
+  }
+}
+
+export class IterFilterNumber extends NumberIterator {
+  iterator: Iterator<number>;
+  predicat: (elem: number) => boolean;
+
+  constructor(iterator: Iterator<number>, predicat: (elem: number) => boolean) {
+    super();
+    this.iterator = iterator;
+    this.predicat = predicat;
+  }
+
+  next() {
+    while (true) {
+      let elem = this.iterator.next();
+      if (elem == null) return null;
+      if (!!this.predicat(elem)) return elem;
+    }
   }
 }
 

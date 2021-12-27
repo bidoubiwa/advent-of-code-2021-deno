@@ -9,6 +9,7 @@ export {
   LiterValues,
   nextBin,
   NumberIterator,
+  RangeIter,
   windowGen,
 } from './generators.ts';
 
